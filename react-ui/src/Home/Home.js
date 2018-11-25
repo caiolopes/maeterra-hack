@@ -1,10 +1,27 @@
 import React from 'react';
-import { Header } from '../Header';
+import { Redirect } from "react-router-dom";
 
-const Home = () => {
+import { Header } from '../Header';
+import { isLogged } from '../utils';
+
+const Home = (props) => {
+
+  const render = () => {
+    if (isLogged()) {
+        return <Redirect
+          to={{
+            pathname: "/home",
+            state: { from: props.location }
+          }}
+        />
+    } else {
+      return <Header />;
+    }
+  }
+
   return (
     <div>
-      <Header />
+      {render()}
       {/*
       <section className="features-icons bg-light text-center">
         <div className="container">
