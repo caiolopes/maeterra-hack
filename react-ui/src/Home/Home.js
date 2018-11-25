@@ -5,6 +5,7 @@ const Home = () => {
   return (
     <div>
       <Header />
+      {/*
       <section className="features-icons bg-light text-center">
         <div className="container">
           <div className="row">
@@ -117,6 +118,7 @@ const Home = () => {
           </div>
         </div>
       </section>
+      */}
     </div>
   );
 };

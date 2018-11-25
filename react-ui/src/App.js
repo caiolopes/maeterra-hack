@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Redirect, Switch } from "react-router-dom";
 
 import { Nav } from './Nav';
 import { Footer } from './Footer';
@@ -31,7 +31,7 @@ function PrivateRouteWithLayout({ component: Component, ...rest }) {
   );
 }
 
-const List = () => {
+const ListPage = () => {
   return (
     <div className="container">
       <div className="row">
@@ -95,11 +95,11 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div>
+        <Switch>
           <DefaultLayout path="/" exact component={Home} />
           <Route path="/login" exact component={Login} />
-          <PrivateRouteWithLayout path="/home" exact component={List} />
-        </div>
+          <PrivateRouteWithLayout path="/home" exact component={ListPage} />
+        </Switch>
       </Router>
     );
   }

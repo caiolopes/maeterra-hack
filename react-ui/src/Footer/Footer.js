@@ -8,22 +8,22 @@ const Footer = () => {
           <div className="col-lg-6 h-100 text-center text-lg-left my-auto">
             <ul className="list-inline mb-2">
               <li className="list-inline-item">
-                <a href="#">About</a>
+                <a href="#">Sobre</a>
               </li>
               <li className="list-inline-item">&sdot;</li>
               <li className="list-inline-item">
-                <a href="#">Contact</a>
+                <a href="#">Contato</a>
               </li>
               <li className="list-inline-item">&sdot;</li>
               <li className="list-inline-item">
-                <a href="#">Terms of Use</a>
+                <a href="#">Termos de uso</a>
               </li>
               <li className="list-inline-item">&sdot;</li>
               <li className="list-inline-item">
-                <a href="#">Privacy Policy</a>
+                <a href="#">Política de privacidade</a>
               </li>
             </ul>
-            <p className="text-muted small mb-4 mb-lg-0">&copy; Your Website 2018. All Rights Reserved.</p>
+            <p className="text-muted small mb-4 mb-lg-0">&copy; Guardaê 2018. Todos os direitos reservados.</p>
           </div>
           <div className="col-lg-6 h-100 text-center text-lg-right my-auto">
             <ul className="list-inline mb-0">
