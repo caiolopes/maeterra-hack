@@ -31,6 +31,79 @@ function PrivateRouteWithLayout({ component: Component, ...rest }) {
   );
 }
 
+const Reservar = () => {
+  const lists = JSON.parse(localStorage.getItem('myList')) || [];
+
+  return (
+    <div className="container">
+      <div className="row mt-2 mb-2">
+        <div className="offset-1 col-4">
+          <div className="list-group" id="list-tab" role="tablist">
+            <a className="list-group-item list-group-item-action active" id="list-ze-list" data-toggle="list" href="#list-ze" role="tab" aria-controls="home">Barraca Seu Zé <div className="float-right">3 dos 3 itens</div><br />1,5 km <div className="float-right">R$30,00</div></a>
+            <a className="list-group-item list-group-item-action" id="list-ana-list" data-toggle="list" href="#list-ana" role="tab" aria-controls="home">Barraca Dona Ana <div className="float-right">2 dos 3 itens</div><br />2,3 km <div className="float-right">R$20,00</div></a>
+            <a className="list-group-item list-group-item-action" id="list-vilma-list" data-toggle="list" href="#list-vilma" role="tab" aria-controls="home">Barraca da Vilma <div className="float-right">1 dos 3 itens</div><br />5 km <div className="float-right">R$10,00</div></a>
+          </div>
+        </div>
+        <div className="col-7">
+          <div className="tab-content" id="nav-tabContent">
+            <div className="tab-pane fade show active" id="list-ze" role="tabpanel" aria-labelledby="list-ze-list">
+        <div className="col-md-6 order-md-2 mb-4">
+          <h4 className="d-flex justify-content-between align-items-center mb-3">
+            <span className="text-muted">Seu carrinho</span>
+            <span className="badge badge-secondary badge-pill">3</span>
+          </h4>
+          <div className="mb-3">
+            <h5>Data da reserva</h5>
+            <input className="form-control" type="date" />
+          </div>
+          <ul className="list-group mb-3">
+            {lists.length > 0 &&
+                <div>
+                  {lists.map((list, i) => (
+                    <div>
+                      {list.name}
+                        {list.items.map((item, i) => (
+                          <li className="list-group-item d-flex justify-content-between lh-condensed">
+                            <div>
+                              <h6 className="my-0">{item.item}</h6>
+                              <small className="text-muted">{item.amount} - {item.unit}</small>
+                            </div>
+                            <span className="text-muted">R$ 10,00</span>
+                          </li>
+                        ))}
+                    </div>
+                  ))}
+                </div>
+            }
+            <li className="list-group-item d-flex justify-content-between bg-light">
+              <div className="text-success">
+                <h6 className="my-0">Promo code</h6>
+                <small>DESCONTO_MAE_TERRA</small>
+              </div>
+              <span className="text-success">-R$ 5,00</span>
+            </li>
+            <li className="list-group-item d-flex justify-content-between">
+              <span>Total (BRL)</span>
+              <strong>R$ 25,00</strong>
+            </li>
+          </ul>
+          <hr class="mb-4" />
+          <Link to="/checkout"><button class="btn btn-primary btn-lg btn-block" type="submit">Continuar com a reserva</button></Link>
+          <hr class="mb-4" />
+          <h4>Mapa</h4>
+        </div>
+
+              <img src="img/maps.png" width="100%" />
+            </div>
+            <div className="tab-pane fade" id="list-ana" role="tabpanel" aria-labelledby="list-ana-list">...</div>
+            <div className="tab-pane fade" id="list-vilma" role="tabpanel" aria-labelledby="list-vilma-list">...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 const ListPage = () => {
   const lists = JSON.parse(localStorage.getItem('myList')) || [];
 
@@ -85,7 +158,7 @@ const ListPage = () => {
                             <li>{item.item} - {item.amount} - {item.unit}</li>
                           ))}
                         </ul>
-                        <Link to=""><button class="btn btn-primary">Reservar</button></Link>
+                        <Link to="/reservar"><button className="btn btn-primary">Reservar</button></Link>
                       </div>
                     </div>
                   </div>
@@ -94,7 +167,7 @@ const ListPage = () => {
           </div>
           <div className="list-group">
             {lists.length === 0 &&
-                <h3>Você ainda não construiu nenhuma lista ainda</h3>
+                <h3>{localStorage.getItem('user') == 'sandra@gmail.com' ? 'Oi Sandra, ' : 'Oi,'} você ainda não construiu nenhuma lista ainda</h3>
             }
           </div>
         </div>
@@ -195,6 +268,28 @@ class CreateList extends Component {
   }
 }
 
+const Checkout = (props) => {
+  window.swal(
+    'Reserva efetuada',
+    'O feirante será avisado sobre sua reserva',
+    'success'
+  )
+  return (
+    <div className="container">
+      <div className="row">
+        <div className="col-sm-6 offset-lg-3 col-lg-6 mt-3 mb-3">
+          <Redirect
+            to={{
+              pathname: "/home",
+              state: { from: props.location }
+            }}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 class App extends Component {
   render() {
     return (
@@ -204,6 +299,8 @@ class App extends Component {
           <Route path="/login" exact component={Login} />
           <PrivateRouteWithLayout path="/home" exact component={ListPage} />
           <PrivateRouteWithLayout path="/lista/criar" exact component={CreateList} />
+          <PrivateRouteWithLayout path="/reservar" exact component={Reservar} />
+          <PrivateRouteWithLayout path="/checkout" exact component={Checkout} />
         </Switch>
       </Router>
     );
